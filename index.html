@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Filosofia Teste Grátis - Gabarito Max</title>
+  <style>
+    :root{
+      --bg:#05070c;
+      --card:#11141b;
+      --card2:#171b24;
+      --blue:#00f3ff;
+      --pink:#ff00e6;
+      --green:#39ff14;
+      --red:#ff003c;
+      --yellow:#ffd400;
+      --text:#ffffff;
+      --muted:#cfcfcf;
+      --line:rgba(255,255,255,.08);
+      --lock:#6b7280;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#000;
+      color:var(--text);
+      min-height:100vh;
+      padding:20px 12px 40px;
+      text-align:center;
+      overflow-x:hidden;
+    }
+
+    header{
+      max-width:1100px;
+      margin:0 auto 24px;
+      border:2px solid var(--blue);
+      border-radius:24px;
+      padding:22px 16px;
+      background:linear-gradient(180deg,#0c0f16,#090b11);
+      box-shadow:0 0 22px rgba(0,243,255,.22);
+    }
+
+    header h1{
+      color:var(--blue);
+      font-size:clamp(2rem,4vw,3rem);
+      text-shadow:0 0 14px rgba(0,243,255,.7);
+      font-weight:900;
+    }
+
+    header p{
+      margin-top:10px;
+      color:var(--pink);
+      font-weight:800;
+      font-size:clamp(1rem,2vw,1.3rem);
+    }
+
+    #app{
+      width:100%;
+      max-width:1100px;
+      margin:0 auto;
+    }
+
+    .box{
+      width:100%;
+      max-width:100%;
+      background:linear-gradient(180deg,var(--card),var(--card2));
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:20px 16px;
+      box-shadow:0 0 20px rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+
+    .btn{
+      display:block;
+      width:100%;
+      max-width:560px;
+      margin:10px auto;
+      padding:14px 16px;
+      border:2px solid var(--blue);
+      background:transparent;
+      color:#fff;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:800;
+      font-size:1rem;
+      line-height:1.45;
+      transition:.2s;
+      white-space:normal;
+      word-break:break-word;
+      overflow-wrap:anywhere;
+    }
+
+    .btn:hover:not(:disabled){
+      background:var(--blue);
+      color:#000;
+      box-shadow:0 0 18px rgba(0,243,255,.35);
+    }
+
+    .btn-lock{
+      border-color:var(--lock);
+      color:#d1d5db;
+      background:rgba(255,255,255,.03);
+    }
+
+    .btn-lock:hover{
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      box-shadow:none;
+    }
+
+    .btn-premium{
+      border-color:var(--yellow);
+      color:var(--yellow);
+    }
+
+    .btn-premium:hover:not(:disabled){
+      background:var(--yellow);
+      color:#000;
+      box-shadow:0 0 18px rgba(255,212,0,.35);
+    }
+
+    .btn-voltar{
+      border-color:#666;
+      color:#ddd;
+    }
+
+    .btn-voltar:hover:not(:disabled){
+      background:#333;
+      color:#fff;
+      box-shadow:none;
+    }
+
+    .btn.correct{
+      background:var(--green)!important;
+      border-color:var(--green)!important;
+      color:#000!important;
+    }
+
+    .btn.wrong{
+      background:var(--red)!important;
+      border-color:var(--red)!important;
+      color:#fff!important;
+    }
+
+    .grid-areas{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+      margin-top:18px;
+    }
+
+    .card-area{
+      background:linear-gradient(135deg, rgba(0,243,255,.08), rgba(255,0,230,.08));
+      border:1px solid rgba(0,243,255,.16);
+      border-radius:16px;
+      padding:16px;
+      text-align:left;
+      min-width:0;
+    }
+
+    .card-area.locked{
+      background:linear-gradient(135deg, rgba(107,114,128,.10), rgba(55,65,81,.12));
+      border-color:rgba(107,114,128,.25);
+    }
+
+    .card-area h3{
+      color:var(--blue);
+      margin-bottom:8px;
+      font-size:1.12rem;
+      line-height:1.35;
+      word-break:break-word;
+    }
+
+    .card-area.locked h3{
+      color:#d1d5db;
+    }
+
+    .card-area p{
+      color:#ddd;
+      font-size:.95rem;
+      line-height:1.45;
+      margin-bottom:10px;
+      word-break:break-word;
+    }
+
+    .status{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+      color:var(--pink);
+      font-weight:bold;
+      text-align:left;
+    }
+
+    #question-text{
+      font-size:1.05rem;
+      line-height:1.6;
+      margin:20px 0;
+      min-height:88px;
+      text-align:left;
+      word-break:break-word;
+      overflow-wrap:anywhere;
+    }
+
+    .question-label{
+      display:block;
+      color:var(--yellow);
+      font-weight:bold;
+      margin-bottom:8px;
+    }
+
+    .text-base{
+      display:block;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:12px;
+      padding:14px;
+      margin:10px 0 14px;
+      color:#f5f5f5;
+      font-style:italic;
+      line-height:1.65;
+    }
+
+    .options-wrap{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      margin-bottom:16px;
+      width:100%;
+      max-width:100%;
+    }
+
+    .option-btn{
+      width:100%;
+      max-width:100%;
+      margin:0;
+      text-align:left;
+      min-height:58px;
+    }
+
+    .result-number{
+      font-size:3rem;
+      color:var(--blue);
+      margin:12px 0;
+      font-weight:900;
+    }
+
+    .result-sub{
+      font-size:1.12rem;
+      color:#ddd;
+      margin-bottom:10px;
+    }
+
+    .mini{
+      color:var(--muted);
+      font-size:.96rem;
+      line-height:1.5;
+    }
+
+    .lock-box{
+      max-width:780px;
+      margin:0 auto;
+      background:linear-gradient(135deg, rgba(255,212,0,.10), rgba(255,0,230,.10));
+      border:1px solid rgba(255,212,0,.25);
+      border-radius:20px;
+      padding:28px 18px;
+      box-shadow:0 0 20px rgba(255,212,0,.12);
+    }
+
+    .lock-box h2{
+      color:var(--yellow);
+      font-size:2rem;
+      margin-bottom:14px;
+    }
+
+    .lock-box p{
+      color:#f3f4f6;
+      line-height:1.6;
+      margin-bottom:12px;
+    }
+
+    @media (max-width:700px){
+      .grid-areas{
+        grid-template-columns:1fr;
+      }
+      .box{
+        padding:16px 12px;
+      }
+      #question-text{
+        font-size:1rem;
+      }
+      .btn{
+        font-size:.96rem;
+        padding:13px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>FILOSOFIA TESTE GRÁTIS</h1>
+  <p>2 MÓDULOS LIBERADOS • 10 QUESTÕES CADA • RESTANTE BLOQUEADO</p>
+</header>
+
+<div id="app"></div>
+
+<audio id="audio-bg" loop preload="auto" playsinline>
+  <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=tension-103701.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="audio-correct" preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=success-1-6297.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="audio-wrong" preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_c6ccf3232f.mp3?filename=error-126627.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const PREMIUM_URL = "COLE_AQUI_O_LINK_PREMIUM_DE_FILOSOFIA";
+
+const app = document.getElementById("app");
+const audioBg = document.getElementById("audio-bg");
+const audioCorrect = document.getElementById("audio-correct");
+const audioWrong = document.getElementById("audio-wrong");
+
+audioBg.volume = 0.06;
+audioCorrect.volume = 0.45;
+audioWrong.volume = 0.45;
+
+let audioLiberado = false;
+let areaAtual = "";
+let questoesAtuais = [];
+let indiceQuestao = 0;
+let acertosObjetivas = 0;
+let questaoRenderizadaAtual = null;
+
+document.addEventListener("click", destravarAudio, { once: true });
+document.addEventListener("touchstart", destravarAudio, { once: true });
+
+function destravarAudio() {
+  if (audioLiberado) return Promise.resolve(true);
+
+  audioBg.muted = true;
+  return audioBg.play()
+    .then(() => {
+      audioBg.pause();
+      audioBg.currentTime = 0;
+      audioBg.muted = false;
+      audioLiberado = true;
+
+      audioCorrect.play().then(() => {
+        audioCorrect.pause();
+        audioCorrect.currentTime = 0;
+      }).catch(() => {});
+
+      audioWrong.play().then(() => {
+        audioWrong.pause();
+        audioWrong.currentTime = 0;
+      }).catch(() => {});
+
+      return true;
+    })
+    .catch(() => false);
+}
+
+function tocarAudioFundo() {
+  if (!audioLiberado) return;
+  audioBg.currentTime = 0;
+  audioBg.play().catch(() => {});
+}
+
+function pararAudioFundo() {
+  audioBg.pause();
+  audioBg.currentTime = 0;
+}
+
+function tocarAcerto() {
+  audioCorrect.currentTime = 0;
+  audioCorrect.play().catch(() => {});
+}
+
+function tocarErro() {
+  audioWrong.currentTime = 0;
+  audioWrong.play().catch(() => {});
+}
+
+const areas = [
+  { nome: "Filosofia Antiga", descricao: "Módulo liberado no teste grátis.", liberada: true },
+  { nome: "Filosofia Medieval", descricao: "Módulo liberado no teste grátis.", liberada: true },
+  { nome: "Filosofia Moderna", descricao: "Disponível apenas na versão premium.", liberada: false },
+  { nome: "Filosofia Contemporânea", descricao: "Disponível apenas na versão premium.", liberada: false },
+  { nome: "Ética e Moral", descricao: "Disponível apenas na versão premium.", liberada: false },
+  { nome: "Filosofia Política", descricao: "Disponível apenas na versão premium.", liberada: false },
+  { nome: "Teoria do Conhecimento", descricao: "Disponível apenas na versão premium.", liberada: false },
+  { nome: "Lógica e Argumentação", descricao: "Disponível apenas na versão premium.", liberada: false },
+  { nome: "Cultura, Arte e Sociedade", descricao: "Disponível apenas na versão premium.", liberada: false },
+  { nome: "Filosofia no ENEM", descricao: "Disponível apenas na versão premium.", liberada: false }
+];
+
+function criarObjetiva(area, numero, textoBase, pergunta, alternativas, correta) {
+  return {
+    tipo: "objetiva",
+    area,
+    numero,
+    base: textoBase,
+    q: pergunta,
+    o: alternativas,
+    c: correta
+  };
+}
+
+function gerarAreaBase(nomeArea, perguntasObjetivas) {
+  return perguntasObjetivas.map((item, i) =>
+    criarObjetiva(nomeArea, i + 1, item.base, item.q, item.o, item.c)
+  );
+}
+
+function embaralharAlternativas(questao) {
+  const pares = questao.o.map((texto, idx) => ({ texto, correta: idx === questao.c }));
+  for (let i = pares.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pares[i], pares[j]] = [pares[j], pares[i]];
+  }
+  return {
+    ...questao,
+    opcoesRenderizadas: pares.map(p => p.texto),
+    corretaRenderizada: pares.findIndex(p => p.correta)
+  };
+}
+
+const bancoQuestoes = {
+  "Filosofia Antiga": gerarAreaBase(
+    "Filosofia Antiga",
+    [
+      {
+        base:`"Sócrates defendia que a reflexão sobre si mesmo era fundamental para alcançar uma vida melhor."`,
+        q:"A frase 'conhece-te a ti mesmo' está relacionada principalmente à ideia de:",
+        o:["Valorização da riqueza material","Autoconhecimento e reflexão crítica","Domínio militar da cidade","Obediência cega às tradições"],
+        c:1
+      },
+      {
+        base:`"O método socrático consistia em fazer perguntas para levar o interlocutor a perceber contradições em suas próprias opiniões."`,
+        q:"Esse método é conhecido como:",
+        o:["Dialética socrática ou maiêutica","Empirismo científico","Materialismo histórico","Determinismo biológico"],
+        c:0
+      },
+      {
+        base:`"Platão distinguia o mundo sensível, percebido pelos sentidos, do mundo inteligível, alcançado pela razão."`,
+        q:"Para Platão, o conhecimento verdadeiro pertence ao:",
+        o:["Mundo das aparências","Mundo inteligível das ideias","Mundo dos prazeres corporais","Mundo das opiniões populares"],
+        c:1
+      },
+      {
+        base:`"Na Alegoria da Caverna, Platão apresenta prisioneiros que confundem sombras com a realidade."`,
+        q:"Essa alegoria representa principalmente:",
+        o:["A superioridade da força física","A passagem da ignorância ao conhecimento","A defesa da tirania","A negação da educação"],
+        c:1
+      },
+      {
+        base:`"Aristóteles via o ser humano como um animal político, naturalmente voltado à convivência em comunidade."`,
+        q:"Para Aristóteles, a vida na pólis era importante porque:",
+        o:["Impediria todo pensamento individual","Permitiria a realização plena do ser humano","Eliminaria a necessidade de leis","Substituiria a ética pela guerra"],
+        c:1
+      },
+      {
+        base:`"A ética aristotélica valoriza a virtude como equilíbrio entre excesso e falta."`,
+        q:"Segundo Aristóteles, a virtude está relacionada ao:",
+        o:["Meio-termo racional","Prazer sem limites","Castigo divino","Acúmulo de bens"],
+        c:0
+      },
+      {
+        base:`"Os sofistas ensinavam retórica e argumentação, muitas vezes defendendo que a verdade poderia depender da convenção humana."`,
+        q:"Uma característica dos sofistas era:",
+        o:["A rejeição total da linguagem","O ensino da arte de argumentar","A defesa exclusiva da matemática","A negação da vida pública"],
+        c:1
+      },
+      {
+        base:`"Para Platão, a cidade justa deveria ser governada por aqueles que alcançassem o conhecimento verdadeiro."`,
+        q:"Na filosofia política platônica, o governo ideal caberia aos:",
+        o:["Comerciantes","Filósofos","Guerreiros mais fortes","Poetas populares"],
+        c:1
+      },
+      {
+        base:`"A filosofia nasce na Grécia Antiga como tentativa de explicar racionalmente a realidade, afastando-se das explicações míticas."`,
+        q:"O surgimento da filosofia está ligado à passagem:",
+        o:["Do mito ao logos","Da ciência ao mito","Da democracia à monarquia absoluta","Da escrita à oralidade total"],
+        c:0
+      },
+      {
+        base:`"Os pré-socráticos buscavam compreender a origem e o princípio de todas as coisas na natureza."`,
+        q:"A preocupação central dos filósofos pré-socráticos era:",
+        o:["Apenas a moral religiosa","A origem da natureza e do cosmos","O funcionamento das fábricas","A estrutura dos Estados modernos"],
+        c:1
+      }
+    ]
+  ),
+
+  "Filosofia Medieval": gerarAreaBase(
+    "Filosofia Medieval",
+    [
+      {
+        base:`"Na Idade Média, muitos filósofos buscaram conciliar a fé religiosa com o uso da razão."`,
+        q:"Uma característica central da filosofia medieval foi:",
+        o:["Separação total entre fé e pensamento","Busca de relação entre fé e razão","Negação absoluta da religião","Defesa exclusiva do ateísmo"],
+        c:1
+      },
+      {
+        base:`"Santo Agostinho foi influenciado pelo pensamento platônico e valorizava a interioridade na busca da verdade."`,
+        q:"Para Santo Agostinho, a verdade plena está relacionada a:",
+        o:["Deus e à iluminação interior","Somente aos sentidos corporais","Apenas à riqueza social","Exclusivamente à política romana"],
+        c:0
+      },
+      {
+        base:`"Agostinho afirmava que o mal não é uma substância criada por Deus, mas ausência ou privação do bem."`,
+        q:"Segundo essa visão, o mal é entendido como:",
+        o:["Uma força superior a Deus","Privação do bem","Matéria eterna independente","Prova da inexistência da alma"],
+        c:1
+      },
+      {
+        base:`"Tomás de Aquino foi influenciado por Aristóteles e procurou demonstrar racionalmente aspectos da fé cristã."`,
+        q:"Na filosofia de Tomás de Aquino, fé e razão são:",
+        o:["Inimigas absolutas","Complementares","Totalmente inúteis","Idênticas em tudo"],
+        c:1
+      },
+      {
+        base:`"A Escolástica foi um movimento intelectual medieval ligado às escolas e universidades."`,
+        q:"A Escolástica tinha como objetivo frequente:",
+        o:["Unir investigação racional e doutrina cristã","Eliminar o estudo filosófico","Negar qualquer debate teológico","Substituir livros por mitos orais"],
+        c:0
+      },
+      {
+        base:`"Tomás de Aquino apresentou argumentos conhecidos como vias para demonstrar racionalmente a existência de Deus."`,
+        q:"Essas vias buscavam partir:",
+        o:["Da observação do mundo e da razão","Do acaso puro sem lógica","Da negação da natureza","Da recusa de qualquer argumento"],
+        c:0
+      },
+      {
+        base:`"Durante a Idade Média, os mosteiros e universidades tiveram papel importante na preservação e transmissão do conhecimento."`,
+        q:"Nesse contexto, a produção filosófica estava fortemente ligada:",
+        o:["À vida religiosa e acadêmica","À indústria moderna","Ao cinema e à televisão","À internet e redes sociais"],
+        c:0
+      },
+      {
+        base:`"A filosofia medieval não abandonou totalmente os gregos; ao contrário, reinterpretou Platão e Aristóteles à luz da fé cristã."`,
+        q:"Isso mostra que a filosofia medieval:",
+        o:["Dialogou com a filosofia antiga","Destruiu todo pensamento grego","Recusou qualquer uso da razão","Foi apenas ciência experimental moderna"],
+        c:0
+      },
+      {
+        base:`"Para Agostinho, o ser humano possui liberdade, mas pode se afastar do bem ao fazer mau uso da vontade."`,
+        q:"O conceito importante nessa explicação é:",
+        o:["Livre-arbítrio","Contrato social","Luta de classes","Evolução biológica"],
+        c:0
+      },
+      {
+        base:`"A filosofia medieval tratou de temas como Deus, alma, fé, razão, bem, mal e salvação."`,
+        q:"Esses temas revelam forte influência:",
+        o:["Teológica","Industrial","Esportiva","Publicitária"],
+        c:0
+      }
+    ]
+  )
+};
+function irParaPremium() {
+  window.location.href = PREMIUM_URL;
+}
+
+function mostrarMenu() {
+  pararAudioFundo();
+
+  app.innerHTML = `
+    <div class="box">
+      <h2 style="color:var(--blue); margin-bottom:8px;">Escolha um módulo de Filosofia</h2>
+      <p class="mini">No teste grátis você libera <strong>2 módulos</strong>. Os demais ficam bloqueados para levar ao premium.</p>
+
+      <div class="grid-areas">
+        ${areas.map(area => `
+          <div class="card-area ${area.liberada ? "" : "locked"}">
+            <h3>${area.liberada ? area.nome : "🔒 " + area.nome}</h3>
+            <p>${area.descricao}</p>
+            <button class="btn ${area.liberada ? "" : "btn-lock"}" onclick="${area.liberada ? `iniciarArea('${area.nome.replace(/'/g, "\\'")}')` : `mostrarBloqueio()`}">
+              ${area.liberada ? "Entrar neste módulo" : "Desbloquear no premium"}
+            </button>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function mostrarBloqueio() {
+  pararAudioFundo();
+
+  app.innerHTML = `
+    <div class="lock-box">
+      <h2>🔒 MÓDULO PREMIUM</h2>
+      <p>Esse módulo está disponível apenas na versão completa do simulado de Filosofia.</p>
+      <p>No premium você desbloqueia todos os módulos e continua seu treinamento completo.</p>
+      <button class="btn btn-premium" onclick="irParaPremium()">LIBERAR ACESSO COMPLETO</button>
+      <button class="btn btn-voltar" onclick="mostrarMenu()">VOLTAR AO MENU</button>
+    </div>
+  `;
+}
+
+async function iniciarArea(nomeArea) {
+  await destravarAudio();
+  areaAtual = nomeArea;
+  questoesAtuais = bancoQuestoes[nomeArea] || [];
+  indiceQuestao = 0;
+  acertosObjetivas = 0;
+  questaoRenderizadaAtual = null;
+
+  if (!questoesAtuais.length) {
+    app.innerHTML = `
+      <div class="box">
+        <h2 style="color:var(--red);">Erro ao abrir o módulo</h2>
+        <button class="btn btn-voltar" onclick="mostrarMenu()">Voltar ao menu</button>
+      </div>
+    `;
+    return;
+  }
+
+  setTimeout(() => {
+    tocarAudioFundo();
+  }, 120);
+
+  carregarQuestao();
+}
+
+function montarEnunciado(questao) {
+  return `
+    <span class="question-label">Base para interpretação:</span>
+    <span class="text-base">${questao.base}</span>
+    <span class="question-label">Pergunta:</span>
+    ${questao.q}
+  `;
+}
+
+function carregarQuestao() {
+  const questao = questoesAtuais[indiceQuestao];
+  const total = questoesAtuais.length;
+  questaoRenderizadaAtual = embaralharAlternativas(questao);
+
+  let html = `
+    <div class="box">
+      <div class="status">
+        <span>${areaAtual}</span>
+        <span>Questão ${indiceQuestao + 1}/${total}</span>
+      </div>
+      <div id="question-text">${montarEnunciado(questaoRenderizadaAtual)}</div>
+      <div class="options-wrap">
+  `;
+
+  questaoRenderizadaAtual.opcoesRenderizadas.forEach((alt, idx) => {
+    html += `<button class="btn option-btn" onclick="responderObjetiva(${idx})">${alt}</button>`;
+  });
+
+  html += `
+      </div>
+      <button class="btn btn-voltar" onclick="mostrarMenu()">Voltar ao menu</button>
+    </div>
+  `;
+
+  app.innerHTML = html;
+}
+
+function responderObjetiva(escolhida) {
+  const botoes = document.querySelectorAll(".option-btn");
+  const correta = questaoRenderizadaAtual.corretaRenderizada;
+
+  botoes.forEach((btn, idx) => {
+    btn.disabled = true;
+    if (idx === correta) btn.classList.add("correct");
+  });
+
+  if (escolhida === correta) {
+    acertosObjetivas++;
+    tocarAcerto();
+  } else {
+    botoes[escolhida].classList.add("wrong");
+    tocarErro();
+  }
+
+  setTimeout(() => {
+    indiceQuestao++;
+    if (indiceQuestao < questoesAtuais.length) {
+      carregarQuestao();
+    } else {
+      finalizarArea();
+    }
+  }, 900);
+}
+
+function finalizarArea() {
+  pararAudioFundo();
+
+  const notaFinal = acertosObjetivas * 10;
+  const totalPossivel = 200;
+  let feedback = "Você concluiu apenas uma parte do simulado completo (200 pontos). Desbloqueie o premium para acessar todos os módulos de Filosofia.";
+
+  if (notaFinal >= 80) feedback += " Ótimo resultado no teste grátis. Você já pode avançar para o premium.";
+  else if (notaFinal >= 50) feedback += " Bom começo. No premium você treina o restante dos módulos.";
+  else feedback += " Esse teste já mostrou onde melhorar. O premium ajuda a evoluir com treino completo.";
+
+  app.innerHTML = `
+    <div class="box">
+      <h2 style="color:var(--blue);">${areaAtual}</h2>
+      <div class="result-number">${notaFinal}/${totalPossivel}</div>
+      <div class="result-sub">Acertos: ${acertosObjetivas}/10</div>
+      <p class="mini" style="margin-bottom:18px;">${feedback}</p>
+
+      <button class="btn btn-premium" onclick="irParaPremium()">DESBLOQUEAR VERSÃO COMPLETA</button>
+      <button class="btn" onclick="iniciarArea('${areaAtual.replace(/'/g, "\\'")}')">Refazer este módulo</button>
+      <button class="btn btn-voltar" onclick="mostrarMenu()">Voltar ao menu</button>
+    </div>
+  `;
+}
+
+mostrarMenu();
+</script>
+
+</body>
+</html>
